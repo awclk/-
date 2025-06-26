@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termux Simulator - For Entertainment Only</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap');
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #000;
+            color: #0f0;
+            padding: 20px;
+        }
+        .terminal {
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            min-height: 300px;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow-y: auto;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+        }
+        .prompt {
+            color: #0f0;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        input {
+            background: transparent;
+            border: none;
+            color: #0f0;
+            font-family: 'Source Code Pro', monospace;
+            flex-grow: 1;
+            outline: none;
+            caret-color: #0f0;
+        }
+        .blinking-cursor {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .progress {
+            height: 20px;
+            background-color: #222;
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #0f0;
+            width: 0%;
+            transition: width 2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" id="terminal">
+        <p>┌────────────────────────────────────────────────────┐</p>
+        <p>│  Insta Loction Tracker  │</p>
+        <p>└────────────────────────────────────────────────────┘</p>
+        <br>
+        <div id="content">
+            <div class="input-line">
+                <span class="prompt">root@kali:~$</span>
+                <input type="text" id="commandInput" autofocus onkeypress="handleCommand(event)">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const content = document.getElementById('content');
+        const commandInput = document.getElementById('commandInput');
+        
+        function writeToTerminal(text, delay = 0) {
+            setTimeout(() => {
+                const p = document.createElement('p');
+                p.textContent = text;
+                terminal.insertBefore(p, content);
+                terminal.scrollTop = terminal.scrollHeight;
+            }, delay);
+        }
+
+        function createPrompt() {
+            const div = document.createElement('div');
+            div.className = 'input-line';
+            div.innerHTML = `<span class="prompt">root@kali:~$</span><span class="blinking-cursor">_</span>`;
+            content.appendChild(div);
+        }
+
+        function showHackingAnimation() {
+            writeToTerminal("Starting hack sequence...");
+            
+            setTimeout(() => {
+                const progress = document.createElement('div');
+                progress.className = 'progress';
+                progress.innerHTML = '<div class="progress-bar" id="progressBar"></div>';
+                content.appendChild(progress);
+                
+                const bar = document.getElementById('progressBar');
+                setTimeout(() => { bar.style.width = '25%'; }, 500);
+                setTimeout(() => { bar.style.width = '50%'; }, 1500);
+                setTimeout(() => { bar.style.width = '75%'; }, 2500);
+                setTimeout(() => { bar.style.width = '100%'; }, 3500);
+                
+                setTimeout(() => {
+                    writeToTerminal("Bypassing security protocols...");
+                    writeToTerminal("Accessing target system...");
+                    writeToTerminal("Injecting payload...");
+                    writeToTerminal("Payload delivered successfully!");
+                    
+                    setTimeout(() => {
+                        writeToTerminal("");
+                        writeToTerminal("━━━━━━━━ Target Information ━━━━━━━━");
+                        writeToTerminal(`Username: ${commandInput.value}`);
+                        writeToTerminal("Device: Samsung Galaxy M05");
+                        writeToTerminal("IP Address: 192.168.1.45");
+                        writeToTerminal("ISP: SLT Mobitel");
+                        writeToTerminal("━━━━━━━━ Location Data ━━━━━━━━");
+                        writeToTerminal("Country: Sri Lanka");
+                        writeToTerminal("District: Matale");
+                        writeToTerminal("City: Kotuwegedara");
+                        writeToTerminal("Coordinates: 7.6135° N, 80.6220° E");
+                        writeToTerminal("");
+                        writeToTerminal("Remited User ✅");
+                        writeToTerminal("No actual hacking has occurred.");
+                        
+                        createPrompt();
+                    }, 2000);
+                }, 4000);
+            }, 1000);
+        }
+
+        function handleCommand(e) {
+            if (e.key === 'Enter') {
+                const command = commandInput.value;
+                if (command.toLowerCase().startsWith('sh')) {
+                    const username = command.substring(command.indexOf(' ') + 1);
+                    if (username) {
+                        commandInput.remove();
+                        writeToTerminal(`root@kali:~$ ${command}`);
+                        showHackingAnimation();
+                    } else {
+                        writeToTerminal(`root@kali:~$ ${command}`);
+                        writeToTerminal("Please specify a username to 'hack'");
+                        writeToTerminal("Example: hack john_doe");
+                        commandInput.value = '';
+                    }
+                } else if (command.toLowerCase() === 'clear') {
+                    while (content.previousSibling) {
+                        terminal.removeChild(content.previousSibling);
+                    }
+                    commandInput.value = '';
+                } else if (command.toLowerCase() === 'help') {
+                    writeToTerminal(`root@kali:~$ ${command}`);
+                    writeToTerminal("Available commands:");
+                    writeToTerminal("hack [username] - Start fake hacking sequence");
+                    writeToTerminal("clear - Clear terminal");
+                    writeToTerminal("help - Show this help message");
+                    commandInput.value = '';
+                } else {
+                    writeToTerminal(`root@kali:~$ ${command}`);
+                    writeToTerminal("Command not found. Type 'help' for available commands.");
+                    commandInput.value = '';
+                }
+            }
+        }
+
+        // Initial help message
+        writeToTerminal("Type 'hack [username]' to start the simulation");
+        writeToTerminal("Type 'help' for available commands");
+        writeToTerminal("");
+    </script>
+</body>
+</html>
