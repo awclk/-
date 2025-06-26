@@ -154,8 +154,8 @@
                         showHackingAnimation();
                     } else {
                         writeToTerminal(`root@kali:~$ ${command}`);
-                        writeToTerminal("Please specify a username to 'hack'");
-                        writeToTerminal("Example: hack john_doe");
+                        writeToTerminal("Please specify a username to 'sh'");
+                        writeToTerminal("Example: sh john_doe");
                         commandInput.value = '';
                     }
                 } else if (command.toLowerCase() === 'clear') {
@@ -166,7 +166,7 @@
                 } else if (command.toLowerCase() === 'help') {
                     writeToTerminal(`root@kali:~$ ${command}`);
                     writeToTerminal("Available commands:");
-                    writeToTerminal("hack [username] - Start fake hacking sequence");
+                    writeToTerminal("sh username - Start fake hacking sequence");
                     writeToTerminal("clear - Clear terminal");
                     writeToTerminal("help - Show this help message");
                     commandInput.value = '';
